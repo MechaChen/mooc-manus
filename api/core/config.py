@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
 
 
 class Settings(BaseSettings):
@@ -27,6 +28,8 @@ class Settings(BaseSettings):
     )
 
 
-if __name__ == "__main__":
+@lru_cache()
+def get_settings() -> Settings:
+    """獲取 MoocManus 配置信息，使用 lru_cache 做緩存，避免重複加載"""
     settings = Settings()
-    print(settings)
+    return settings
